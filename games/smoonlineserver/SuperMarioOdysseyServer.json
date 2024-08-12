@@ -1,0 +1,34 @@
+{
+  "Name": "Super Mario Odyssey Server",
+  "Author": "admin@masuowo.xyz",
+  "UpdateUrl": null,
+  "DonateUrl": "https://ko-fi.com/masuowo",
+  "StartupCommand": "/home/container/Server.bin",
+  "OnlineDetection": "Listening",
+  "StopCommand": "^C",
+  "InstallShell": "/bin/bash",
+  "InstallDockerImage": "ghcr.io/parkervcp/installers:debian",
+  "InstallScript": "#! /bin/bash\n\napt update\napt install wget -y\n\ncd /mnt/server\n\nwget -O /mnt/server/Server.bin https://github.com/Sanae6/SmoOnlineServer/releases/latest/download/Server\nchmod +x /mnt/server/Server.bin\n\nif [ ! -f /mnt/server/settings.json ]; then\n    wget -O /mnt/server/settings.json https://raw.githubusercontent.com/Masu-Baumgartner/MoonlightImages/main/games/smoonlineserver/settings.json\nfi",
+  "ParseConfiguration": "[{\"Type\":\"file\",\"File\":\"settings.json\",\"Configuration\":{\"    \\\"MaxPlayers\\\":\":\"    \\\"MaxPlayers\\\": {{MAX_PLAYERS}}\",\"    \\\"Port\\\"\":\"    \\\"Port\\\": {{SERVER_PORT}},\"}}]",
+  "AllocationsNeeded": 1,
+  "Variables": [
+    {
+      "Key": "MAX_PLAYERS",
+      "DefaultValue": "8",
+      "DisplayName": "Max Players",
+      "Description": "The max amount of players that can join",
+      "AllowView": true,
+      "AllowEdit": true,
+      "Filter": null
+    }
+  ],
+  "DefaultDockerImage": 0,
+  "AllowDockerImageChange": true,
+  "DockerImages": [
+    {
+      "DisplayName": "ghcr.io/parkervcp/yolks:debian",
+      "Name": "ghcr.io/parkervcp/yolks:debian",
+      "AutoPull": true
+    }
+  ]
+}
